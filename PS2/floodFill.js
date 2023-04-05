@@ -686,7 +686,7 @@ const downloadSelectedObject = async () => {
 
   // var joAya={shape:"triangle",coordinates:[[112, 141],[439, 110],[449, 615]]}
 
-  if (joAya.shape == "Rectangle") {
+  if (joAya.shape == "rectangle") {
     // var height = joAya.coordiantes[0][1] - joAya.coordiantes[]
     // const x1 = 112;//tl-x
     const x1 = joAya.coordinates[0][1];
@@ -800,17 +800,17 @@ const shapeAutocomplete = async () => {
   // console.log(response)
   var obj = fcanvas.getActiveObject();
   var data = await response.json();
-  fcanvas.remove(obj);
   // var joAya={shape:"rectangle",coordinates:[[112, 141],[439, 110],[449, 215],[122,246]]}
   // var joAya = { shape: "circle", r: 262 / 2, x: 252 / 2, y: 264 / 2 };
   if(data.data[0]=="unknown shape"){console.log("unknown shape");return;}
+  fcanvas.remove(obj);
   var shapeData = JSON.parse(data.data[0].replace(/'/g, '"'));
   console.log(shapeData);
-  console.log(typeof shapeData);
-  console.log(shapeData[0])
   var joAya = { shape: "circle", r: 262 / 2, x: 252 / 2, y: 264 / 2 };
   joAya.shape = shapeData[0];
   // ("['Circle', [252, 264, 262]]");
+  console.log(shapeData)
+  // shapeData
 
   // var joAya={shape:"triangle",coordinates:[[112, 141],[439, 110],[449, 615]]}
 
@@ -831,17 +831,21 @@ const shapeAutocomplete = async () => {
     const x3 = shapeData[7];//bl-x
     // const x3 = 122;//bl-x
     // const x3 = joAya.coordinates[3][0];
-    const y3 = shapeData[8];//bl-y
+    const y3 = shapeData[8];//bl-y 
     // const y3 = 246;//bl-y
     // const y3 = joAya.coordinates[3][1];
     fcanvas.add(
       new fabric.Rect({
-        left: x1,
-        top: y1,
-        width: Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))/512,
-        height: Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2))/512,
+        left: tl.x,
+        top: tl.y,
+        width: Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))*(Math.abs(tr.x-tl.x)/512),
+        // width: Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))*(Math.abs(tr-tl)/512),
+        height: Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2))*(Math.abs(tl.y-bl.y)/512),
+        // height: Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2))*(Math.abs(tl-bl)/512),
         angle: fabric.util.radiansToDegrees(Math.atan2(y2 - y1, x2 - x1)),
-        fill: "red",
+        stroke: "#000",
+        strokeWidth: 2,
+        fill:""
       })
     );
   } else if (joAya.shape == "Circle") {
