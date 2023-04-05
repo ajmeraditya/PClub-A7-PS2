@@ -149,7 +149,43 @@ drawingColorFillEl.onchange = function () {
   fcanvas.freeDrawingBrush.fillColor = parseInt(this.value, 10) || 30;
   fillValue = this.value;
 };
-var isDown;
+var isDown,origX,origY,ellipse;
+function onMouseDownEllipse(options){
+  isDown = true;
+  fcanvas.isDrawingMode = false;
+  var pointer = fcanvas.getPointer(options.e);
+  origX = pointer.x;
+  origY = pointer.y;
+  ellipse = new fabric.Ellipse({
+    left: origX,
+    top: origY,
+    originX: 'left',
+    originY: 'top',
+    rx: 0,
+    ry: 0,
+    angle: 0,
+    fill: 'transparent',
+    stroke: 'black',
+    strokeWidth: 2
+  });
+  fcanvas.add(ellipse);
+}
+
+function onMouseMoveEllipse(options){
+  if (!isDown) return;
+  fcanvas.isDrawingMode = false;
+  var pointer = fcanvas.getPointer(options.e);
+  var rx = (pointer.x - origX) / 2;
+  var ry = (pointer.y - origY) / 2;
+  ellipse.set({ rx: rx, ry: ry });
+  fcanvas.renderAll();
+}
+
+function onMouseUpEllipse(options){
+  isDown = false;
+  isDrawingMode = true;
+
+}
 function onMouseDownRectangle(o) {
   // console.log(selectedObject);
   isDown = true;
@@ -559,6 +595,7 @@ function changeAction(target) {
     "rectangle",
     "circle",
     "triangle",
+    "ellipse"
     // "clip",
   ];
   types.forEach((action) => {
@@ -619,6 +656,12 @@ function changeAction(target) {
       fcanvas.on("mouse:down", onMouseDownTriangle);
       fcanvas.on("mouse:move", onMouseMoveTriangle);
       fcanvas.on("mouse:up", onMouseUpTriangle);
+      fcanvas.isDrawingMode = false;
+      break;
+    case "ellipse":
+      fcanvas.on("mouse:down",onMouseDownEllipse);
+      fcanvas.on("mouse:move",onMouseMoveEllipse);
+      fcanvas.on("mouse:up",onMouseUpEllipse)
       fcanvas.isDrawingMode = false;
       break;
     case "clip":
