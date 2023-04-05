@@ -666,104 +666,6 @@ const downloadSelectedObject = async () => {
   link.href = base64;
   link.download = `eraser_example.${ext}`;
   console.log(link.href);
-  console.log(selectedObject);
-  const response = await fetch(
-    "https://arrayxhunter-shape-classifier.hf.space/run/predict",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        data: [link.href],
-      }),
-    }
-  );
-  // console.log(response)
-  var obj = fcanvas.getActiveObject();
-  fcanvas.remove(obj);
-  // var joAya={shape:"rectangle",coordinates:[[112, 141],[439, 110],[449, 215],[122,246]]}
-  var joAya = { shape: "circle", r: 262 / 2, x: 252 / 2, y: 264 / 2 };
-  ("['Circle', [252, 264, 262]]");
-
-  // var joAya={shape:"triangle",coordinates:[[112, 141],[439, 110],[449, 615]]}
-
-  if (joAya.shape == "rectangle") {
-    // var height = joAya.coordiantes[0][1] - joAya.coordiantes[]
-    // const x1 = 112;//tl-x
-    const x1 = joAya.coordinates[0][1];
-    // const y1 = 141;//tl-y
-    const y1 = joAya.coordinates[0][1];
-    // const x2 = 439;//tr-x
-    const x2 = joAya.coordinates[1][0];
-    // const y2 = 110;//tr-y
-    const y2 = joAya.coordinates[1][1];
-    // const x3 = 122;//bl-x
-    const x3 = joAya.coordinates[3][0];
-    // const y3 = 246;//bl-y
-    const y3 = joAya.coordinates[3][1];
-    fcanvas.add(
-      new fabric.Rect({
-        left: x1,
-        top: y1,
-        width: Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)),
-        height: Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2)),
-        angle: fabric.util.radiansToDegrees(Math.atan2(y2 - y1, x2 - x1)),
-        fill: "red",
-      })
-    );
-  } else if (joAya.shape == "circle") {
-    fcanvas.add(
-      new fabric.Circle({
-        radius: joAya.r,
-        fill: false,
-        left: 100 + joAya.x,
-        top: 100 + joAya.y,
-        stroke: "#000",
-        strokeWidth: 2,
-      })
-    );
-  } else if (joAya.shape == "triangle") {
-    // Define the three points of the triangle
-    var point1 = new fabric.Point(
-      joAya.coordinates[0][0],
-      joAya.coordinates[0][1]
-    );
-    var point2 = new fabric.Point(
-      joAya.coordinates[1][0],
-      joAya.coordinates[1][1]
-    );
-    var point3 = new fabric.Point(
-      joAya.coordinates[2][0],
-      joAya.coordinates[2][1]
-    );
-
-    // Calculate the length of the three sides of the triangle
-    var a = point2.distanceFrom(point3);
-    var b = point1.distanceFrom(point3);
-    var c = point1.distanceFrom(point2);
-
-    // Calculate the angle between sides b and c using the Law of Cosines
-    var angle = Math.acos((b * b + c * c - a * a) / (2 * b * c));
-
-    // Create a new fabric.Triangle object using the three points and the calculated angle
-    fcanvas.add(
-      new fabric.Triangle({
-        left: 100,
-        top: 100,
-        width: b,
-        height: c * Math.sin(angle),
-        fill: "blue",
-        //   originX: "center",
-        //   originY: "center",
-        angle: fabric.util.radiansToDegrees(
-          Math.atan2(point2.y - point1.y, point2.x - point1.x)
-        ),
-        points: [point1, point2, point3],
-      })
-    );
-  }
-
-  const data = await response.json();
-  console.log(data.data[0]);
 
   link.click();
 };
@@ -802,50 +704,57 @@ const shapeAutocomplete = async () => {
   var data = await response.json();
   // var joAya={shape:"rectangle",coordinates:[[112, 141],[439, 110],[449, 215],[122,246]]}
   // var joAya = { shape: "circle", r: 262 / 2, x: 252 / 2, y: 264 / 2 };
-  if(data.data[0]=="unknown shape"){console.log("unknown shape");return;}
+  if (data.data[0] == "unknown shape") {
+    console.log("unknown shape");
+    return;
+  }
   fcanvas.remove(obj);
   var shapeData = JSON.parse(data.data[0].replace(/'/g, '"'));
   console.log(shapeData);
   var joAya = { shape: "circle", r: 262 / 2, x: 252 / 2, y: 264 / 2 };
   joAya.shape = shapeData[0];
   // ("['Circle', [252, 264, 262]]");
-  console.log(shapeData)
+  console.log(shapeData);
   // shapeData
 
   // var joAya={shape:"triangle",coordinates:[[112, 141],[439, 110],[449, 615]]}
 
   if (joAya.shape == "Rectangle") {
     // var height = joAya.coordiantes[0][1] - joAya.coordiantes[]
-    const x1 = shapeData[1];//tl-x
+    const x1 = shapeData[1]; //tl-x
     // const x1 = 112;//tl-x
     // const x1 = joAya.coordinates[0][1];
-    const y1 = shapeData[2];//tl-y
+    const y1 = shapeData[2]; //tl-y
     // const y1 = 141;//tl-y
     // const y1 = joAya.coordinates[0][1];
-    const x2 = shapeData[3];//tr-x
+    const x2 = shapeData[3]; //tr-x
     // const x2 = 439;//tr-x
     // const x2 = joAya.coordinates[1][0];
-    const y2 = shapeData[4];//tr-y
+    const y2 = shapeData[4]; //tr-y
     // const y2 = 110;//tr-y
     // const y2 = joAya.coordinates[1][1];
-    const x3 = shapeData[7];//bl-x
+    const x3 = shapeData[7]; //bl-x
     // const x3 = 122;//bl-x
     // const x3 = joAya.coordinates[3][0];
-    const y3 = shapeData[8];//bl-y 
+    const y3 = shapeData[8]; //bl-y
     // const y3 = 246;//bl-y
     // const y3 = joAya.coordinates[3][1];
     fcanvas.add(
       new fabric.Rect({
         left: tl.x,
         top: tl.y,
-        width: Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))*(Math.abs(tr.x-tl.x)/512),
+        width:
+          Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)) *
+          (Math.abs(tr.x - tl.x) / 512),
         // width: Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2))*(Math.abs(tr-tl)/512),
-        height: Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2))*(Math.abs(tl.y-bl.y)/512),
+        height:
+          Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2)) *
+          (Math.abs(tl.y - bl.y) / 512),
         // height: Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2))*(Math.abs(tl-bl)/512),
         angle: fabric.util.radiansToDegrees(Math.atan2(y2 - y1, x2 - x1)),
         stroke: "#000",
         strokeWidth: 2,
-        fill:""
+        fill: "",
       })
     );
   } else if (joAya.shape == "Circle") {
