@@ -944,7 +944,13 @@ $(function () {
   fcanvas = new fabric.Canvas("c", {
     backgroundColor: "#fff",
     enableRetinaScaling: false,
+    width: window.innerWidth*60/100,
+    height: window.innerHeight*89/100,
   });
+
+  if(window.innerWidth < 1000){
+    fcanvas.width = window.innerWidth*40/100;
+  }
 
   // Add some demo-shapes:
   fcanvas.add(

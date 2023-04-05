@@ -50,6 +50,23 @@ button.active {
             background: limegreen;
             font-weight: bold
         }
+        *{
+            /* overflow-y: hidden; */
+        }
+        body{
+            display: flex;
+            display: flex;
+    /* flex-wrap: wrap; */
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+        }
+        @media screen and (max-width:1000px) {
+            body{
+                flex-wrap: wrap;
+            }
+        }
     </style>
     <!-- <link rel="stylesheet" href="style.css"> -->
         <!-- <script src="https://unpkg.com/fabric@latest/dist/fabric.js"></script> -->
@@ -178,7 +195,7 @@ button.active {
         </div>
     </div>
         <div id="canvasContainer">
-            <canvas id="c" width="1000" height="740"></canvas>
+            <canvas id="c" width="1000" height="740" style=""></canvas>
         </div>
         <!-- <script src="floodFillOriginal.js"></script> -->
         <script src="floodFill.js"></script>
