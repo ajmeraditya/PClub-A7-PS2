@@ -356,6 +356,7 @@ drawingShadowOffset.onchange = function () {
       color: document.getElementById("drawing-shadow-color").value,
     });
   }
+
 };
 
 // var drawingOptionsEl = document.getElementById("drawing-mode-options")
@@ -395,6 +396,7 @@ document.getElementById("drawing-mode-selector").onchange = function () {
 
     if (fcanvas.freeDrawingBrush) {
       var brush = fcanvas.freeDrawingBrush;
+      // brush.color = drawingColorEl.value;
       brush.color = drawingColorEl.value;
       if (brush.getPatternSrc) {
         brush.source = brush.getPatternSrc.call(brush);
@@ -666,12 +668,12 @@ const downloadSelectedObject = async() => {
   link.href = base64;
   link.download = `eraser_example.${ext}`;
   console.log(link.href)
-  const response = await fetch("https://arrayxhunter-test.hf.space/run/predict", {
+  const response = await fetch("https://arrayxhunter-shape-classifier.hf.space/run/predict", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       data: [
-        link.href,
+        link.href
       ]
     })
   });
