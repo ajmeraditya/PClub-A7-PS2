@@ -110,14 +110,14 @@ button.active {
                     <input type="color" value="#f7f7f700" id="drawing-color-fill"><br>
                 </div>
         
-                <div style="word-spacing: 5px;">
+                <div style="word-spacing: 5px;display: none;">
                     <input id="a" type="checkbox" onchange="setBgImageErasableProp(this)">
                     <label for="a">
                         Background image <code>Erasable</code>
                     </label>
                     
-                </div style="margin:5px;">
-                <div style="word-spacing: 5px;">
+                </div style="margin:5px;display:none">
+                <div style="word-spacing: 5px;display: none;">
                     <input id="b" type="checkbox" onchange="setErasingRemovesErasedObjects(this)">
                     <label for="b">
                         Remove erased objects on <code>Erasing end</code>
@@ -128,7 +128,7 @@ button.active {
                     <label for="drawing-shadow-width">Shadow width  :</label>
                     <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-width"><br>
                 </div>
-                <div>
+                <div style="display: none;">
                     <label for="drawing-shadow-offset">Shadow offset  :</label>
                     <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>
                 </div>
@@ -150,8 +150,8 @@ button.active {
                 <!-- <button id="clip" type="button" onclick="changeAction(this)">Clip</button> -->
             </div>
             <div id="buttons" style="margin: 1rem;">
-                <button id="btnZoomIn">ZoomIn</button>
-                <button id="btnZoomOut">ZoomOut</button>
+                <!-- <button id="btnZoomIn">ZoomIn</button> -->
+                <!-- <button id="btnZoomOut">ZoomOut</button> -->
                 <button type="button" onclick="shapeAutocomplete()">Auto Complete</button>
                 <button type="button" onclick="toJSON()">toJSON</button>
                 <button type="button" onclick="downloadImage()">toImage</button>
@@ -165,13 +165,13 @@ button.active {
                     <option>Circle</option>
                     <option>Spray</option>
                     <option>Pattern</option>
-                    <option>Marker</option>
-                    <option>Calligraphy</option>
-                    <option>Hline</option>
-                    <option>Vline</option>
-                    <option>Square</option>
-                    <option>Diamond</option>
-                    <option>Texture</option>
+                    <option style="display:none">Marker</option>
+                    <option style="display:none">Calligraphy</option>
+                    <option style="display:none">Hline</option>
+                    <option style="display:none">Vline</option>
+                    <option style="display:none">Square</option>
+                    <option style="display:none">Diamond</option>
+                    <option style="display:none">Texture</option>
                 </select><br>
             </div>
         </div>
