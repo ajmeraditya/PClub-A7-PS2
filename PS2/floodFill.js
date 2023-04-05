@@ -132,7 +132,7 @@ var fillValue;
 var drawingColorFillEl = document.getElementById("drawing-color-fill");
 drawingLineWidthEl = document.getElementById("drawing-line-width");
 drawingLineWidthEl.onchange = function () {
-  fcanvas.freeDrawingBrush.width = parseInt(this.value, 10) || 30;
+  fcanvas.freeDrawingBrush.width = parseInt(this.value, 10) || 5;
   this.previousSibling.innerHTML = this.value;
 };
 drawingColorEl = document.getElementById("drawing-color");
@@ -146,11 +146,11 @@ drawingColorEl.onchange = function () {
   //   }
 };
 drawingColorFillEl.onchange = function () {
-  fcanvas.freeDrawingBrush.fillColor = parseInt(this.value, 10) || 30;
+  fcanvas.freeDrawingBrush.fillColor = parseInt(this.value, 10) || 5;
   fillValue = this.value;
 };
-var isDown,origX,origY,ellipse;
-function onMouseDownEllipse(options){
+var isDown, origX, origY, ellipse;
+function onMouseDownEllipse(options) {
   isDown = true;
   fcanvas.isDrawingMode = false;
   var pointer = fcanvas.getPointer(options.e);
@@ -159,19 +159,19 @@ function onMouseDownEllipse(options){
   ellipse = new fabric.Ellipse({
     left: origX,
     top: origY,
-    originX: 'left',
-    originY: 'top',
+    originX: "left",
+    originY: "top",
     rx: 0,
     ry: 0,
     angle: 0,
-    fill: 'transparent',
-    stroke: 'black',
-    strokeWidth: 2
+    fill: "transparent",
+    stroke: "black",
+    strokeWidth: 2,
   });
   fcanvas.add(ellipse);
 }
 
-function onMouseMoveEllipse(options){
+function onMouseMoveEllipse(options) {
   if (!isDown) return;
   fcanvas.isDrawingMode = false;
   var pointer = fcanvas.getPointer(options.e);
@@ -181,10 +181,9 @@ function onMouseMoveEllipse(options){
   fcanvas.renderAll();
 }
 
-function onMouseUpEllipse(options){
+function onMouseUpEllipse(options) {
   isDown = false;
   isDrawingMode = true;
-
 }
 function onMouseDownRectangle(o) {
   // console.log(selectedObject);
@@ -312,7 +311,7 @@ function onMouseUpTriangle(o) {
 let erasingRemovesErasedObjects = false;
 drawingLineWidthEl = document.getElementById("drawing-line-width");
 drawingLineWidthEl.onchange = function () {
-  fcanvas.freeDrawingBrush.width = parseInt(this.value, 10) || 30;
+  fcanvas.freeDrawingBrush.width = parseInt(this.value, 10) || 5;
   this.previousSibling.innerHTML = this.value;
 };
 
@@ -351,7 +350,7 @@ drawingShadowColorEl.onchange = function () {
 };
 
 drawingShadowWidth.onchange = function () {
-  fcanvas.freeDrawingBrush.shadowBlur = parseInt(this.value, 10) || 30;
+  fcanvas.freeDrawingBrush.shadowBlur = parseInt(this.value, 10) || 5;
   this.previousSibling.innerHTML = this.value;
   console.log(fcanvas.freeDrawingBrush.shadowBlur);
   if (fcanvas.freeDrawingBrush) {
@@ -373,8 +372,8 @@ drawingShadowWidth.onchange = function () {
   //   console.log(this)
 };
 drawingShadowOffset.onchange = function () {
-  fcanvas.freeDrawingBrush.shadow.offsetX = parseInt(this.value, 10) || 30;
-  fcanvas.freeDrawingBrush.shadow.offsetY = parseInt(this.value, 10) || 30;
+  fcanvas.freeDrawingBrush.shadow.offsetX = parseInt(this.value, 10) || 5;
+  fcanvas.freeDrawingBrush.shadow.offsetY = parseInt(this.value, 10) || 5;
   this.previousSibling.innerHTML = this.value;
   if (fcanvas.freeDrawingBrush) {
     var brush = fcanvas.freeDrawingBrush;
@@ -420,7 +419,7 @@ document.getElementById("drawing-mode-selector").onchange = function () {
   else if (this.value === "Marker") {
     const markerBrush = new fabric.MarkerBrush(fcanvas);
     markerBrush.color = "#000000"; // set color to black
-    markerBrush.width = 20; // set stroke width to 20 pixels
+    markerBrush.width = 5; // set stroke width to 20 pixels
     markerBrush.strokeLineCap = "round"; // set line cap to round
 
     fcanvas.isDrawingMode = true;
@@ -595,7 +594,7 @@ function changeAction(target) {
     "rectangle",
     "circle",
     "triangle",
-    "ellipse"
+    "ellipse",
     // "clip",
   ];
   types.forEach((action) => {
@@ -619,19 +618,19 @@ function changeAction(target) {
       break;
     case "undo":
       fcanvas.freeDrawingBrush = new fabric.EraserBrush(fcanvas);
-      fcanvas.freeDrawingBrush.width = 10;
+      fcanvas.freeDrawingBrush.width = 20;
       fcanvas.freeDrawingBrush.inverted = true;
       fcanvas.isDrawingMode = true;
       break;
     case "draw":
       fcanvas.freeDrawingBrush = new fabric.PencilBrush(fcanvas);
-      fcanvas.freeDrawingBrush.width = 35;
+      fcanvas.freeDrawingBrush.width = 5;
       // canvas.freeDrawingBrush.color = "green";
       fcanvas.isDrawingMode = true;
       break;
     case "spray":
       fcanvas.freeDrawingBrush = new fabric.SprayBrush(fcanvas);
-      fcanvas.freeDrawingBrush.width = 35;
+      fcanvas.freeDrawingBrush.width = 5;
       fcanvas.isDrawingMode = true;
       break;
     case "circle":
@@ -659,9 +658,9 @@ function changeAction(target) {
       fcanvas.isDrawingMode = false;
       break;
     case "ellipse":
-      fcanvas.on("mouse:down",onMouseDownEllipse);
-      fcanvas.on("mouse:move",onMouseMoveEllipse);
-      fcanvas.on("mouse:up",onMouseUpEllipse)
+      fcanvas.on("mouse:down", onMouseDownEllipse);
+      fcanvas.on("mouse:move", onMouseMoveEllipse);
+      fcanvas.on("mouse:up", onMouseUpEllipse);
       fcanvas.isDrawingMode = false;
       break;
     case "clip":
@@ -944,12 +943,12 @@ $(function () {
   fcanvas = new fabric.Canvas("c", {
     backgroundColor: "#fff",
     enableRetinaScaling: false,
-    width: window.innerWidth*60/100,
-    height: window.innerHeight*89/100,
+    width: (window.innerWidth * 60) / 100,
+    height: (window.innerHeight * 89) / 100,
   });
 
-  if(window.innerWidth < 1000){
-    fcanvas.width = window.innerWidth*40/100;
+  if (window.innerWidth < 1000) {
+    fcanvas.width = (window.innerWidth * 40) / 100;
   }
 
   // Add some demo-shapes:
